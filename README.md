@@ -1,8 +1,8 @@
-Bugzilla Dependency Bug List
+Passwords Dependency Bug List
 =====================
 
 Flatten a dependency tree into a sortable list of bugs
 
-The code is very rough and should be rewritten but it works for the most part.
+View it at https://mnoorenberghe.github.io/password-bugs/
 
-Example at https://mnoorenberghe.github.io/bz-dependency-buglist/
+Upstream code is at https://mnoorenberghe.github.io/bz-dependency-buglist/

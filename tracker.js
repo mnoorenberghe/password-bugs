@@ -10,11 +10,12 @@
 
 var gMetabugs = {
   // "alias": bug number,
-  // TODO: update this object for your needs
-  //"australis-meta": 870032,
-  //"australis-tabs": 732583,
+  "passwords-2015": 1121127,
+  "passwords-2015-Q1": 1118955,
+  "password-telemetry": 672979,
+  "password-security": 1118400,
 };
-var gDefaultMetabug = null; // Example: gMetabugs["australis-meta"];
+var gDefaultMetabug = gMetabugs["passwords-2015"];
 
 var gColumns = {
   "id": "ID",
@@ -242,9 +243,9 @@ function getList(blocks, depth) {
         heading.textContent = "Bug " + blocks;
       }
     } else {
-      heading.textContent = "Dependency Bug List";
+      heading.textContent = "Passwords Dependency Bug List";
     }
-    document.title = "Dependency Bug List" + (blocks ? " - " + blocks : "");
+    document.title = "Passwords Dependencies" + (blocks ? " - " + blocks : "");
 
     var treelink = document.getElementById("treelink");
     if (metaBug) {

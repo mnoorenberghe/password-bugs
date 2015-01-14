@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta http-equiv="Pragma" content="no-cache">
-<title>Bugzilla Dependency Bug List</title>
+<title>Passwords Project Bug List</title>
 <link rel="icon" href="https://mozorg.cdn.mozilla.net/media/img/firefox/favicon.ico?2013-08"/>
 <link rel="stylesheet" href="https://bugzilla.mozilla.org/skins/contrib/Mozilla/global.css?1386657099" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Droid+Sans+Mono"/>
@@ -172,7 +172,7 @@ tr:hover {
   <label>Filter: <input type="search" id="whiteboardFilter" placeholder="whiteboard &amp; keywords" size="20"/></label>
   <label>Max. Depth: <input type="number" id="maxDepth" size="1" min="0" max="10" style="max-width: 4ch" required="required" value="4"/></label>
   <label><input type="checkbox" id="showMeta" value="1" checked="checked" />Meta</label>
-  <label><input type="checkbox" id="showMMinus" value="1" />M-/P-</label>
+  <label hidden=hidden><input type="checkbox" id="showMMinus" value="1" />M-/P-</label>
   <select id="showResolved">
     <option value="">Resolved and unresolved</option>
     <option value="0" selected="selected">Only unresolved</option>
@@ -184,6 +184,8 @@ tr:hover {
     <option>Add-on SDK</option>
     <option>Core</option>
     <option>Firefox</option>
+    <option>Firefox for Android</option>
+    <option>Firefox for iOS</option>
     <option>Loop</option>
     <option>mozilla.org</option>
     <option>Release Engineering</option>
@@ -194,7 +196,7 @@ tr:hover {
   </select>
 </div>
 <div id="status" class="hidden"></div>
-<h1><a id="title" target="_blank">Dependency Bug List</a>
+<h1><a id="title" target="_blank">Password Project Dependencies</a>
   <span id="treelink" style="display: none">(<a target="_blank">tree</a>)</span>
 </h1>
 <div id="metabugs"></div>
@@ -214,7 +216,7 @@ tr:hover {
 <div id="summary">
   <span style="float:right">
     <label><input type="checkbox" id="showFlags" value="1" />Show bug and attachment flags (slower)</label>
-    <a href="https://github.com/mnoorenberghe/bz-dependency-buglist/" target="_blank">Fork me on Github</a>
+    <a href="https://github.com/mnoorenberghe/password-bugs/" target="_blank">Fork me on Github</a>
   </span>
 </div>
 
