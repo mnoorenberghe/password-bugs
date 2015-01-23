@@ -21,6 +21,7 @@ var gColumns = {
   "id": "ID",
   "status": "Status",
   "resolution": "",
+  "cf_last_resolved": "Last Resolved",
   //"creator": "Reporter",
   "assigned_to": "Assignee",
   "product": "Prod.",
@@ -157,12 +158,16 @@ function filterChanged(evt) {
 
   var showResolved = parseInt(getFilterValue(gFilterEls.resolved), 2);
   window.localStorage.showResolved = showResolved;
+  document.getElementById("list").dataset.showResolved = window.localStorage.showResolved;
 
   var metaFilter = document.getElementById("showMeta");
   window.localStorage.showMeta = getFilterValue(metaFilter);
 
   var mMinusFilter = document.getElementById("showMMinus");
   window.localStorage.showMMinus = getFilterValue(mMinusFilter);
+
+  var assigneeFilter = document.getElementById("assigneeFilter");
+  window.localStorage.assigneeFilter = getFilterValue(assigneeFilter);
 
   var flagFilter = document.getElementById("showFlags");
   window.localStorage.showFlags = getFilterValue(flagFilter);
@@ -378,6 +383,7 @@ function printList(unthrottled) {
   whiteboardFilter = whiteboardFilter.replace(/^\[m/i, "[Australis:M");
   whiteboardFilter = whiteboardFilter.replace(/^\[p/i, "[Australis:P");
 
+  var assigneeFilter = getFilterValue(gFilterEls.assignee);
   var resolvedFilter = getFilterValue(gFilterEls.resolved);
   var productFilter = getFilterValue(gFilterEls.product);
   var metaFilter = getFilterValue(gFilterEls.meta);
@@ -394,6 +400,11 @@ function printList(unthrottled) {
     }
 
     if (resolvedFilter !== "" && (tr.classList.contains("RESOLVED") || tr.classList.contains("VERIFIED")) != resolvedFilter) {
+      return;
+    }
+
+    if (assigneeFilter !== "" && (assigneeFilter == "unassigned" && !bug.assigned_to.name.startsWith("nobody") ||
+                                  assigneeFilter == "assigned" && bug.assigned_to.name.startsWith("nobody"))) {
       return;
     }
 
@@ -431,6 +442,10 @@ function printList(unthrottled) {
       if (Array.isArray(bug[column])) { // Arrays
         if (column == "flags") {
           bug[column].forEach(function(flag) {
+            // Ignore some old bug flags that are no longer relevant
+            if (flag.name.startsWith("blocking-aviary") || flag.name.endsWith("1.9") || flag.name.endsWith("firefox2")) {
+              return;
+            }
             col.innerHTML += flagText(flag, true) + " ";
           });
         } else if (column == "keywords") {
@@ -556,6 +571,7 @@ function parseQueryParams() {
 
 function loadFilterValues(state) {
   console.log("loadFilterValues", state);
+  gFilterEls.assignee.value = ("assignee" in state ? state.assignee : window.localStorage.assigneeFilter);
   gFilterEls.resolved.value = ("resolved" in state ? state.resolved : window.localStorage.showResolved);
   gFilterEls.product.value = ("product" in state ? state.product : window.localStorage.product);
   document.getElementById("list").dataset.product = gFilterEls.product.value;
@@ -585,6 +601,7 @@ function start() {
   gFilterEls.product = document.getElementById("productChooser");
   gFilterEls.meta = document.getElementById("showMeta");
   gFilterEls.mMinus = document.getElementById("showMMinus");
+  gFilterEls.assignee = document.getElementById("assigneeFilter");
   gFilterEls.flags = document.getElementById("showFlags");
   gFilterEls.maxdepth = document.getElementById("maxDepth");
   gFilterEls.whiteboard = document.getElementById("whiteboardFilter");
@@ -597,6 +614,7 @@ function start() {
   }
 
   // Add filter listeners after loading values
+  gFilterEls.assignee.addEventListener("change", filterChanged);
   gFilterEls.resolved.addEventListener("change", filterChanged);
   gFilterEls.product.addEventListener("change", filterChanged);
   gFilterEls.meta.addEventListener("change", filterChanged);
