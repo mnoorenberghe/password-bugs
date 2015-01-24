@@ -262,7 +262,7 @@ function getList(blocks, depth) {
     } else {
       heading.textContent = "Passwords Dependency Bug List";
     }
-    document.title = "Passwords Dependencies" + (blocks ? " - " + blocks : "");
+    document.title = (blocks ? blocks + " - " : "") + "Passwords Dependencies";
 
     var treelink = document.getElementById("treelink");
     if (metaBug) {
