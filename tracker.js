@@ -416,9 +416,17 @@ function printList(unthrottled) {
       return;
     }
 
-    if (assigneeFilter !== "" && (assigneeFilter == "unassigned" && !bug.assigned_to.name.startsWith("nobody") ||
-                                  assigneeFilter == "assigned" && bug.assigned_to.name.startsWith("nobody"))) {
-      return;
+    if (assigneeFilter !== "") {
+      if (assigneeFilter == "unassigned") {
+        if (!bug.assigned_to.name.startsWith("nobody"))
+          return;
+      } else if (assigneeFilter == "assigned") {
+        if (bug.assigned_to.name.startsWith("nobody"))
+          return;
+      } else {
+        if (shortenUsername(bug.assigned_to.name).toLowerCase() != assigneeFilter.toLowerCase())
+          return;
+      }
     }
 
     if ((productFilter && bug.product != productFilter) || bug.product == "Thunderbird" || bug.product == "Seamonkey") {
@@ -486,7 +494,14 @@ function printList(unthrottled) {
           col.textContent = "ARRAY";
         }
       } else if (typeof(bug[column]) == "object") { // Objects
-        col.textContent =  (bug[column].name ? shortenUsername(bug[column].name) : '');
+        if (bug[column].name) { // e.g. User object
+          var shortName = shortenUsername(bug[column].name);
+          col.setAttribute("sorttable_customkey", shortName.toLowerCase());
+          col.textContent = shortName;
+        } else {
+          col.textContent = '';
+        }
+
         col.dataset[column] = col.textContent;
       } else if (column == "id" || column == "summary") {
         var a = document.createElement("a");
@@ -584,7 +599,15 @@ function parseQueryParams() {
 
 function loadFilterValues(state) {
   console.log("loadFilterValues", state);
-  gFilterEls.assignee.value = ("assignee" in state ? state.assignee : gStorage.assigneeFilter);
+  var assignee = ("assignee" in state ? state.assignee : gStorage.assigneeFilter);
+  gFilterEls.assignee.value = assignee;
+  if (gFilterEls.assignee.value != assignee) {
+    // We set the value but it doesn't match. This means we need to add an option.
+    var option = document.createElement("option");
+    option.value = option.textContent = assignee;
+    gFilterEls.assignee.options.add(option);
+    gFilterEls.assignee.value = assignee;
+  }
   gFilterEls.resolved.value = ("resolved" in state ? state.resolved : gStorage.showResolved);
   gFilterEls.product.value = ("product" in state ? state.product : gStorage.product);
   document.getElementById("list").dataset.product = gFilterEls.product.value;
