@@ -616,8 +616,8 @@ function loadFilterValues(state) {
   gFilterEls.flags.checked = ("flags" in state ? state.flags : gStorage.showFlags) === "1";
   gFilterEls.whiteboard.value = ("whiteboard" in state ? state.whiteboard : "");
   gFilterEls.maxdepth.value = ("maxdepth" in state ? state.maxdepth : MAX_DEPTH);
-  gSortColumn = ("sortColumn" in state ? state.sortColumn : gStorage.sortColumn);
-  gSortDirection = ("sortDirection" in state ? state.sortDirection : gStorage.sortDirection);
+  gSortColumn = ("sortColumn" in state ? state.sortColumn : (gStorage.sortColumn || "priority"));
+  gSortDirection = ("sortDirection" in state ? state.sortDirection : (gStorage.sortDirection || "asc"));
 }
 
 function start() {
