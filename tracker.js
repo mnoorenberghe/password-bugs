@@ -260,7 +260,7 @@ function getList(blocks, depth) {
         heading.textContent = "Bug " + blocks;
       }
     } else {
-      heading.textContent = "Passwords Dependency Bug List";
+      heading.textContent = "Passwords 2015 Dependencies";
     }
     document.title = (blocks ? blocks + " - " : "") + "Passwords Dependencies";
 
