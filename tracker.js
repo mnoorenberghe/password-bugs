@@ -14,6 +14,7 @@ var gMetabugs = {
   "passwords-2015-Q1": 1118955,
   "password-telemetry": 672979,
   "password-security": 1118400,
+  "mobile-about-passwords": 1128664,
 };
 var gDefaultMetabug = gMetabugs["passwords-2015"];
 
