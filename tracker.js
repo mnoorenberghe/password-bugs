@@ -12,8 +12,9 @@ var gMetabugs = {
   // "alias": bug number,
   "passwords-2015": 1121127,
   "passwords-2015-Q1": 1118955,
-  "password-telemetry": 672979,
+  "password-recipes": 1119454,
   "password-security": 1118400,
+  "password-telemetry": 672979,
   "mobile-about-passwords": 1128664,
 };
 var gDefaultMetabug = gMetabugs["passwords-2015"];
