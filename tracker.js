@@ -11,6 +11,7 @@
 var gMetabugs = {
   // "alias": bug number,
   "formless-logins": 1119035,
+  "mobile-passwords": 1079403,
   "mobile-about-passwords": 1128664,
   "passwords-2015": 1121127,
   "passwords-2015-Q1": 1118955,
